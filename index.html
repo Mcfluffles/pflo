@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="PFLO rate card, route tables, and shipping terms for Purrformance Logistics." />
+    <title>PFLO | Purrformance Logistics</title>
+    <style>
+        :root {
+            --bg: #050914;
+            --bg-soft: #08111f;
+            --panel: rgba(13, 25, 42, 0.82);
+            --panel-strong: rgba(17, 33, 55, 0.96);
+            --text: #eef7ff;
+            --muted: #9bb1c8;
+            --muted-2: #6f849a;
+            --accent: #7ee7ff;
+            --accent-2: #f6c75f;
+            --accent-3: #9df7c7;
+            --danger: #ff9b9b;
+            --border: rgba(126, 231, 255, 0.20);
+            --border-strong: rgba(126, 231, 255, 0.34);
+            --shadow: rgba(0, 0, 0, 0.42);
+            --radius: 22px;
+            --radius-sm: 14px;
+            --max: 1120px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at 12% 10%, rgba(126, 231, 255, 0.19), transparent 28rem), radial-gradient(circle at 86% 14%, rgba(246, 199, 95, 0.12), transparent 28rem), radial-gradient(circle at 50% 100%, rgba(157, 247, 199, 0.08), transparent 34rem), linear-gradient(180deg, #040712 0%, #071121 50%, #050914 100%);
+            line-height: 1.6;
+        }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                background-image: linear-gradient(rgba(126, 231, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(126, 231, 255, 0.035) 1px, transparent 1px);
+                background-size: 48px 48px;
+                mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 70%);
+            }
+
+        a {
+            color: inherit;
+        }
+
+        .site {
+            width: min(var(--max), calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 56px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 34px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .mark {
+            width: 54px;
+            height: 54px;
+            border-radius: 17px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border-strong);
+            background: linear-gradient(135deg, rgba(126,231,255,0.20), rgba(246,199,95,0.10)), rgba(255,255,255,0.03);
+            box-shadow: 0 16px 38px var(--shadow), inset 0 0 24px rgba(126,231,255,0.10);
+            color: var(--accent);
+            font-weight: 950;
+            letter-spacing: -0.08em;
+        }
+
+        .brand-title {
+            font-weight: 900;
+            letter-spacing: 0.05em;
+        }
+
+        .brand-subtitle {
+            margin-top: -3px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+            nav a {
+                text-decoration: none;
+                color: var(--muted);
+                font-size: 0.92rem;
+                padding: 9px 12px;
+                border: 1px solid transparent;
+                border-radius: 999px;
+            }
+
+                nav a:hover {
+                    color: var(--text);
+                    border-color: var(--border);
+                    background: rgba(255,255,255,0.04);
+                }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+            gap: 22px;
+            align-items: stretch;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--panel);
+            box-shadow: 0 22px 70px var(--shadow);
+            backdrop-filter: blur(14px);
+            overflow: hidden;
+        }
+
+        .hero-main {
+            padding: clamp(26px, 5vw, 48px);
+            position: relative;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-weight: 800;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            margin-bottom: 16px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-3);
+            box-shadow: 0 0 18px var(--accent-3);
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 780px;
+            font-size: clamp(2.2rem, 7vw, 5.2rem);
+            line-height: 0.95;
+            letter-spacing: -0.065em;
+        }
+
+        .hero-copy {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: clamp(1rem, 2vw, 1.16rem);
+            margin: 22px 0 0;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 44px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 800;
+            border: 1px solid var(--border-strong);
+            background: rgba(126,231,255,0.10);
+            color: var(--text);
+        }
+
+            .button.primary {
+                background: linear-gradient(135deg, rgba(126,231,255,0.95), rgba(157,247,199,0.82));
+                color: #05101c;
+                border: none;
+            }
+
+        .rate-panel {
+            padding: 24px;
+            display: grid;
+            gap: 14px;
+            background: linear-gradient(160deg, rgba(126,231,255,0.08), transparent 42%), var(--panel-strong);
+        }
+
+        .panel-label {
+            color: var(--muted);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 800;
+        }
+
+        .big-rate {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 950;
+            line-height: 1;
+            letter-spacing: -0.06em;
+        }
+
+            .big-rate span {
+                color: var(--muted);
+                font-size: 1rem;
+                letter-spacing: 0;
+                font-weight: 700;
+            }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .metric {
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.035);
+        }
+
+            .metric b {
+                display: block;
+                font-size: 1.2rem;
+            }
+
+            .metric span {
+                color: var(--muted);
+                font-size: 0.88rem;
+            }
+
+        .section {
+            margin-top: 22px;
+            padding: clamp(22px, 4vw, 34px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: clamp(1.45rem, 3vw, 2.1rem);
+            letter-spacing: -0.04em;
+        }
+
+        .section p {
+            color: var(--muted);
+            margin: 8px 0 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .mini-card {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.035);
+        }
+
+            .mini-card .kicker {
+                color: var(--accent);
+                font-size: 0.75rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                font-weight: 900;
+            }
+
+            .mini-card h3 {
+                margin: 8px 0 6px;
+                font-size: 1.1rem;
+            }
+
+            .mini-card p {
+                margin: 0;
+                font-size: 0.95rem;
+            }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.025);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(126,231,255,0.12);
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--accent);
+            font-size: 0.78rem;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+            background: rgba(126,231,255,0.055);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td strong {
+            color: var(--text);
+        }
+
+        td {
+            color: #dceaf8;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 9px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--accent-3);
+            background: rgba(157,247,199,0.07);
+            font-size: 0.82rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .formula {
+            display: grid;
+            gap: 8px;
+            padding: 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(246,199,95,0.25);
+            background: rgba(246,199,95,0.065);
+            color: var(--accent-2);
+            font-weight: 900;
+            margin-top: 16px;
+        }
+
+            .formula span {
+                color: var(--muted);
+                font-weight: 600;
+            }
+
+        .terms {
+            display: grid;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+            .terms li {
+                padding: 14px 16px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                background: rgba(255,255,255,0.035);
+                color: #dceaf8;
+            }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            color: var(--muted-2);
+            font-size: 0.9rem;
+            margin-top: 26px;
+            padding: 0 4px;
+        }
+
+        @media (max-width: 850px) {
+            .topbar, .section-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            nav {
+                justify-content: flex-start;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .site {
+                width: min(100% - 22px, var(--max));
+                padding-top: 18px;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+
+            nav a {
+                padding: 7px 9px;
+                font-size: 0.86rem;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<!--Top Bar Navigation-->
+
+<body>
+    <main class="site">
+        <header class="topbar">
+            <a href="#top" class="brand" aria-label="PFLO home">
+                <div class="mark">PF</div>
+                <div>
+                    <div class="brand-title">PFLO</div>
+                    <div class="brand-subtitle">Purrformance Logistics</div>
+                </div>
+            </a>
+            <nav aria-label="Primary navigation">
+                <a href="#rates">Rates</a>
+                <a href="#routes">Routes</a>
+                <!--<a href="#fleet">Fleet</a>-->
+                <a href="#terms">Terms</a>
+            </nav>
+        </header>
+        <!---->
+        <!--Hero Section-->
+        <section class="hero" id="top">
+            <div class="card hero-main">
+                <div class="eyebrow"><span class="status-dot"></span>Freight Desk Active</div>
+                <h1>If it fits, it ships.</h1>
+                <p class="hero-copy">PFLO provides scheduled and on-demand freight service using standardized cargo blocks, clear route fuel tables, and simple published rates.</p>
+                <div class="hero-actions">
+                    <a class="button primary" href="#rates">View Rate Card</a>
+                    <a class="button" href="#routes">Check Routes</a>
+                </div>
+            </div>
+            <!---->
+            <!--Current Rate Preview-->
+            <!--<aside class="card rate-panel" aria-label="Current rate summary">
+        <div class="panel-label">Current SCU Rate</div>-->
+            <!--<div class="big-rate">6,000 <span>CIS / SCU, or </span>2,400 <span>CAT / SCU</span></div>-->
+            <!--<div class="metric-grid">
+                <div class="metric"><b>6000</b><span>CIS per SCU</span></div>
+                <div class="metric"><b>2400</b><span>CAT per SCU</span></div>
+                <div class="metric"><b>500 t</b><span>Max weight per SCU</span></div>
+                <div class="metric"><b>500 m³</b><span>Max volume per SCU</span></div>
+                <div class="metric"><b>1 SCU</b><span>Minimum shipment</span></div>
+                <div class="metric"><b>+ Fuel</b><span>Route surcharge separate</span></div>
+            </div>
+        </aside>-->
+
+            <aside class="card rate-panel" aria-label="Current rate summary">
+                <div class="panel-label">Current SCU Rate</div>
+                <div class="big-rate">6,000 / 2,400 <span>CIS/CAT per SCU</span></div>
+                <div class="metric-grid">
+                    <div class="metric"><b>500 t</b><span>Max weight per SCU</span></div>
+                    <div class="metric"><b>500 m³</b><span>Max volume per SCU</span></div>
+                    <div class="metric"><b>1 SCU</b><span>Minimum shipment</span></div>
+                    <div class="metric"><b>+ Fuel</b><span>Route surcharge separate</span></div>
+                </div>
+            </aside>
+
+        </section>
+        <!---->
+        <!--SCU Explanation-->
+        <section class="card section" id="rates">
+            <div class="section-header">
+                <div>
+                    <h2>Standard Cargo Unit</h2>
+                    <p>Customers purchase freight capacity in standardized PFLO blocks. PFLO may consolidate or split blocks between vessels as needed.</p>
+                </div>
+                <!--<span class="tag">Active tariff</span>-->
+            </div>
+
+            <div class="grid-3">
+                <article class="mini-card">
+                    <div class="kicker">Unit</div>
+                    <h3>1 SCU</h3>
+                    <p>Up to 500 tonnes and up to 500 m³ of cargo.</p>
+                </article>
+                <article class="mini-card">
+                    <div class="kicker">Freight Charge</div>
+                    <h3>6,000 CIS or 2,400 CAT</h3>
+                    <p>Flat service charge per SCU before route fuel.</p>
+                </article>
+                <article class="mini-card">
+                    <div class="kicker">Minimum</div>
+                    <h3>1 SCU</h3>
+                    <p>Small shipments are accepted, but billed as one full SCU.</p>
+                </article>
+            </div>
+
+            <div class="formula">
+                Standard Route Quote = (SCUs × SCU Rate CIS or CAT) + Route Table Fuel Cost
+                <span>SCUs required = greater of cargo tonnes ÷ 500 or cargo m³ ÷ 500, rounded up.</span>
+            </div>
+        </section>
+        <!---->
+        <!--Route Table-->
+        <section class="card section">
+            <div class="section-header">
+                <div>
+                    <h2>Exchange Route Table</h2>
+                    <p>Established routing with fuel pricing for commodity exchange deliveries.</p>
+                </div>
+                <!--<span class="tag">Routes Active</span>-->
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Fuel (CIS)</th>
+                            <th>Fuel (CAT)</th>
+                            <!--<th>ETA</th>-->
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>BEN ↔ ARC</strong></td>
+                            <td>9,470 CIS</td>
+                            <td>3,790 CAT</td>
+                            <!--<td>—</td>-->
+                            <td>Extended delivery time. Minimum 2 SCU.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="card section" id="routes">
+            <div class="section-header">
+                <div>
+                    <h2>Planetary Delivery Route Table</h2>
+                    <p>Established routing with fuel pricing for planetary deliveries.</p>
+                </div>
+                <!--<span class="tag">Routes Active</span>-->
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Fuel (CIS)</th>
+                            <th>Fuel (CAT)</th>
+                            <!--<th>ETA</th>-->
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>BEN ↔ Milliways</strong></td>
+                            <td>7,815 CIS</td>
+                            <td>3,126 CAT</td>
+                            <!--<td>—</td>-->
+                            <td>Price includes return fuel.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!---->
+        <!--fleet section-->
+        <!--<section class="card section" id="fleet">
+      <div class="section-header">
+        <div>
+          <h2>Fleet Status</h2>
+          <p>PFLO dispatch assigns vessels based on available capacity, route requirements, and cargo constraints.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Vessel Class</th>
+              <th>Capacity</th>
+              <th>Role</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Courier</strong></td>
+              <td>500 t / 500 m³</td>
+              <td>Small freight, flexible dispatch, partial loads.</td>
+              <td><span class="tag">Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>Freighter</strong></td>
+              <td>3,000 t / 1,000 m³</td>
+              <td>Bulk mass transport and multi-SCU consolidation.</td>
+              <td><span class="tag">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>-->
+        <!---->
+
+
+        <section class="card section" id="terms">
+            <div class="section-header">
+                <div>
+                    <h2>Service Terms</h2>
+                    <p>Simple terms for standard freight requests. Contract routes may receive custom pricing or scheduling priority.</p>
+                </div>
+            </div>
+
+            <ul class="terms">
+                <li><strong>Standardized packaging:</strong> All freight is billed in Standard Cargo Units of up to 500t and 500m³.</li>
+                <li><strong>Minimum shipment:</strong> The minimum billable shipment is 1 SCU.</li>
+                <li><strong>Fuel surcharge:</strong> Fuel is charged separately according to the applicable route table or quoted fuel burn.</li>
+                <li><strong>Dispatch discretion:</strong> PFLO may combine multiple SCUs on one vessel or split freight across multiple vessels.</li>
+                <li><strong>Capacity pricing:</strong> Published rates may be adjusted during periods of high demand or limited fleet availability.</li>
+            </ul>
+        </section>
+
+        <footer>
+            <div>PFLO — Purrformance Logistics</div>
+            <div>Last updated: 3026-07-06</div>
+        </footer>
+    </main>
+</body>
+</html>
