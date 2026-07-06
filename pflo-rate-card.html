@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PFLO Rate Card</title>
+  <style>
+    :root {
+      --bg: #071018;
+      --panel: #0f1b26;
+      --panel-2: #132435;
+      --text: #edf6ff;
+      --muted: #9fb4c8;
+      --accent: #7fdcff;
+      --accent-2: #ffcc66;
+      --border: rgba(127, 220, 255, 0.22);
+      --good: #94f7c5;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(127, 220, 255, 0.16), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(255, 204, 102, 0.10), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      width: min(1060px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 64px;
+    }
+
+    header {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr;
+      margin-bottom: 28px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(127, 220, 255, 0.22), rgba(255, 204, 102, 0.14));
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px var(--shadow);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      color: var(--accent);
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4.8rem);
+      letter-spacing: -0.07em;
+    }
+
+    h2 {
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      max-width: 720px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(15, 27, 38, 0.72);
+      color: var(--muted);
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 18px;
+      margin: 28px 0;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(19, 36, 53, 0.92), rgba(15, 27, 38, 0.92));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 50px var(--shadow);
+    }
+
+    .rate {
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.07em;
+      color: var(--text);
+      margin: 12px 0 0;
+    }
+
+    .rate span {
+      font-size: 0.28em;
+      letter-spacing: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .capacity {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .capacity div {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(7, 16, 24, 0.42);
+      border: 1px solid rgba(127, 220, 255, 0.13);
+    }
+
+    .capacity strong {
+      color: var(--text);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      font-size: 0.98rem;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(127, 220, 255, 0.12);
+      text-align: left;
+    }
+
+    th {
+      color: var(--accent);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(7, 16, 24, 0.38);
+    }
+
+    td:last-child, th:last-child {
+      text-align: right;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .highlight {
+      color: var(--good);
+      font-weight: 800;
+    }
+
+    .formula {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(7, 16, 24, 0.56);
+      border: 1px dashed rgba(127, 220, 255, 0.28);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 0.94rem;
+    }
+
+    .footer {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      background: rgba(127, 220, 255, 0.10);
+      font-weight: 800;
+    }
+
+    .button.secondary {
+      background: rgba(255, 204, 102, 0.09);
+    }
+
+    @media (max-width: 820px) {
+      .hero, .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      th, td {
+        padding: 12px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="brand-row">
+        <div class="brand">
+          <div class="logo">PFLO</div>
+          <div>
+            <h1>PFLO Rate Card</h1>
+            <p>Purrformance Logistics — If it fits, it ships.</p>
+          </div>
+        </div>
+        <div class="pill">Effective: 2607-06</div>
+      </div>
+      <p class="tagline">Simple, standardized freight pricing for reliable Prosperous Universe logistics. Customers purchase Standard Freight Units; PFLO handles routing, consolidation, and vessel assignment.</p>
+    </header>
+
+    <section class="hero">
+      <article class="card">
+        <h2>Standard Freight Unit</h2>
+        <p>One Standard Freight Unit, or SFU, covers cargo up to both capacity limits below.</p>
+        <div class="rate">6,000 <span>CIS / SFU</span></div>
+        <p class="note">Fuel is charged separately by route.</p>
+        <div class="capacity">
+          <div><span>Maximum Weight</span><strong>500 t</strong></div>
+          <div><span>Maximum Volume</span><strong>500 m³</strong></div>
+          <div><span>Minimum Shipment</span><strong>1 SFU</strong></div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h2>Quote Formula</h2>
+        <p>Use the larger of weight or volume requirements to determine SFUs.</p>
+        <div class="formula">Freight = SFUs × 6,000 CIS</div>
+        <div class="formula">Total = Freight + Fuel Surcharge</div>
+        <p class="note">Additional SFUs are required whenever either weight or volume exceeds the capacity of the current SFU count.</p>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>SFU Examples</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Cargo</th>
+              <th>SFUs</th>
+              <th>Freight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>400 t / 300 m³</td>
+              <td>1</td>
+              <td>6,000 CIS</td>
+            </tr>
+            <tr>
+              <td>600 t / 300 m³</td>
+              <td>2</td>
+              <td>12,000 CIS</td>
+            </tr>
+            <tr>
+              <td>300 t / 700 m³</td>
+              <td>2</td>
+              <td>12,000 CIS</td>
+            </tr>
+            <tr>
+              <td>900 t / 900 m³</td>
+              <td>2</td>
+              <td>12,000 CIS</td>
+            </tr>
+            <tr>
+              <td>2,100 t / 900 m³</td>
+              <td>5</td>
+              <td>30,000 CIS</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>Current Services</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Standard Freight Unit</td>
+              <td class="highlight">6,000 CIS</td>
+            </tr>
+            <tr>
+              <td>Minimum Shipment</td>
+              <td>1 SFU</td>
+            </tr>
+            <tr>
+              <td>Fuel Surcharge</td>
+              <td>By route</td>
+            </tr>
+            <tr>
+              <td>Priority / Rush Dispatch</td>
+              <td>Quote required</td>
+            </tr>
+            <tr>
+              <td>Recurring Contract Freight</td>
+              <td>Quote required</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Fuel Policy</h2>
+        <p>Fuel is charged separately from the SFU freight rate. This keeps the service rate stable while allowing PFLO to adjust fuel charges as market or production conditions change.</p>
+        <div class="formula">Fuel Surcharge = Route Fuel Requirement × Current Fuel Rate</div>
+      </article>
+
+      <article class="card">
+        <h2>Operating Terms</h2>
+        <p>PFLO may consolidate multiple SFUs aboard a single vessel or split them across multiple vessels at its discretion. Pricing is based on Standard Freight Units purchased, not on the vessel assigned.</p>
+        <p class="note">Availability, timing, and route acceptance are subject to fleet capacity.</p>
+      </article>
+    </section>
+
+
+    <section class="card" style="margin-top: 18px;">
+      <h2>Route Fuel Table</h2>
+      <p>Fuel surcharges are listed by route and added to the SFU freight charge. Replace the placeholder fuel values below with current PFLO route requirements.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Route</th>
+            <th>Fuel Requirement</th>
+            <th>Fuel Surcharge</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Benten ↔ Stella Prime</td>
+            <td>XX FF</td>
+            <td>XX,XXX CIS</td>
+          </tr>
+          <tr>
+            <td>Benten ↔ Katoa</td>
+            <td>XX FF</td>
+            <td>XX,XXX CIS</td>
+          </tr>
+          <tr>
+            <td>Benten ↔ Insitor</td>
+            <td>XX FF</td>
+            <td>XX,XXX CIS</td>
+          </tr>
+          <tr>
+            <td>Custom Route</td>
+            <td>Quote required</td>
+            <td>Quote required</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">Fuel surcharge may be updated when PFLO fuel rates change. Freight rate remains separate from route fuel cost.</p>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+      <h2>Request Freight</h2>
+      <p>To request a quote, provide origin, destination, cargo weight, cargo volume, and desired delivery timing.</p>
+      <div class="button-row">
+        <a class="button" href="#">Contact PFLO Dispatch</a>
+        <a class="button secondary" href="#">View Current Fuel Index</a>
+      </div>
+      <p class="note">Replace these buttons with Discord invite links, a form link, or an FLCA dashboard link when available.</p>
+    </section>
+
+    <footer class="footer">
+      <span>PFLO — Purrformance Logistics</span>
+      <span>Rates may change based on capacity, demand, and fuel conditions.</span>
+    </footer>
+  </main>
+</body>
+</html>
