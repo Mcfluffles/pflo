@@ -7,6 +7,7 @@ async function main() {
     //make this into a nice function loop later lollll
     const production = await afunc.pullMemberProduction();
     const consumption = await afunc.pullMemberConsumption();
+    const internalTradeOps = await afunc.pullInternalTradeOpportunities();
 
     const pfloProd = production.filter(c => c.CompanyCode === "PFLO");
     const nopeProd = production.filter(c => c.CompanyCode === "NOPE");
@@ -98,6 +99,16 @@ async function main() {
         { key: "Name", label: "Name" },
         { key: "NetPerDay", label: "Net / Day" },
         { key: "NetAvgValuePerDay", label: "AvgNetValue / Day" }
+    ]);
+
+    afunc.buildGenericTable("internal-trade-table", internalTradeOps, [
+        { key: "Seller", label: "Seller" },
+        { key: "Ticker", label: "Ticker" },
+        { key: "Buyer", label: "Buyer" },
+        { key: "BuyerDeficitPerDay", label: "Buyer Daily Deficit" },
+        { key: "MatchedPerDay", label: "Matched Amount" },
+        { key: "BuyerDaysRemaining", label: "Buyer Supply Days Remaining" },
+        { key: "BuyerStatus", label: "Buyer Supply Status"}
     ]);
 }
 

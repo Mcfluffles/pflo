@@ -5,3 +5,6 @@ export {
     pullMemberProduction,
     pullMemberConsumption
 } from "./pullMemberProduction.js";
+
+//trade
+export { pullInternalTradeOpportunities } from "./pullInternalTradeOpportunities.js";
