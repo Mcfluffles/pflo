@@ -341,6 +341,41 @@ table {
     min-width: 680px;
 }
 
+td.seller {
+    color: #78e08f;
+    font-weight: 600;
+}
+
+td.buyer {
+    color: #ff8fa3;
+    font-weight: 600;
+}
+
+.status-critical {
+    color: #ff4d4d;
+    font-weight: 700;
+}
+
+.status-low {
+    color: #ffb347;
+    font-weight: 700;
+}
+
+.status-healthy {
+    color: #7ddc6f;
+    font-weight: 700;
+}
+
+.status-abundant {
+    color: #5cc8ff;
+    font-weight: 700;
+}
+
+.status-surplus {
+    color: #9a7dff;
+    font-weight: 700;
+}
+
 th, td {
     padding: 14px 16px;
     border-bottom: 1px solid rgba(127, 220, 255, 0.12);

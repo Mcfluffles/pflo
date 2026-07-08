@@ -102,13 +102,14 @@ async function main() {
     ]);
 
     afunc.buildGenericTable("internal-trade-table", internalTradeOps, [
-        { key: "Seller", label: "Seller" },
+        { key: "Seller", label: "Seller", class: "seller" },
         { key: "Ticker", label: "Ticker" },
-        { key: "Buyer", label: "Buyer" },
+        { key: "Buyer", label: "Buyer", class: "buyer" },
         { key: "BuyerDeficitPerDay", label: "Buyer Daily Deficit" },
+        { key: "SellerSurplusPerDay", label: "Seller Daily Surplus"},
         { key: "MatchedPerDay", label: "Matched Amount" },
         { key: "BuyerDaysRemaining", label: "Buyer Supply Days Remaining" },
-        { key: "BuyerStatus", label: "Buyer Supply Status"}
+        { key: "BuyerStatus", label: "Buyer Supply Status", class: row => `status-${row.BuyerStatus.toLowerCase()}` }
     ]);
 }
 
