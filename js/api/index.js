@@ -1,2 +1,7 @@
 export { pullFLNRoutes } from "./pullFLNRoutes.js";
-export { pullMemberProduction } from "./pullMemberProduction.js";
+
+//production
+export {
+    pullMemberProduction,
+    pullMemberConsumption
+} from "./pullMemberProduction.js";

@@ -131,8 +131,7 @@ nav {
     border-radius: var(--radius);
     background: var(--panel);
     box-shadow: 0 22px 70px var(--shadow);
-    backdrop-filter: blur(14px);
-    overflow: hidden auto;
+    overflow: visible;
 }
 
 .hero-main {
@@ -330,6 +329,7 @@ h2 {
 
 .table-wrap {
     overflow-x: auto;
+    overflow-y: visible;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: rgba(255,255,255,0.025);
