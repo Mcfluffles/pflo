@@ -56,7 +56,7 @@
 
             <aside class="card rate-panel" aria-label="Current rate summary">
                 <div class="panel-label">Current SCU Rate</div>
-                <div class="big-rate">6,000 / 2,400 <span>CIS / CAT per SCU</span></div>
+                <div class="big-rate">6,000 / 2,400 <span>CIS / CAT per SCU for Standard Delivery</span></div>
                 <div class="metric-grid">
                     <div class="metric"><b>500 t</b><span>Max weight per SCU</span></div>
                     <div class="metric"><b>500 m³</b><span>Max volume per SCU</span></div>
@@ -85,7 +85,7 @@
                 </article>
                 <article class="mini-card">
                     <div class="kicker">Freight Charge</div>
-                    <h3>6,000 CIS or 2,400 CAT</h3>
+                    <h3>6,000 CIS or 2,400 CAT for Standard Delivery within 5 days.</h3>
                     <p>Flat service charge per SCU before route fuel.</p>
                 </article>
                 <article class="mini-card">
@@ -96,7 +96,7 @@
             </div>
 
             <div class="formula">
-                Standard Route Quote = (SCUs × SCU Rate CIS or CAT) + Route Table Fuel Cost
+                Standard Route Quote = (SCUs × SCU Service Level Rate CIS or CAT) + Route Table Fuel Cost
                 <span>SCUs required = greater of cargo tonnes ÷ 500 or cargo m³ ÷ 500, rounded up.</span>
             </div>
         </section>
@@ -111,6 +111,14 @@
             </div>
 
             <div class="grid-3">
+                <div class="mini-card">
+                    <div class="kicker">Service Level</div>
+
+                    <select id="quote-service"></select>
+
+                    <p id="quote-service-description"></p>
+                </div>
+
                 <div class="mini-card">
                     <div class="kicker">SCUs</div>
                     <input id="quote-scus" type="number" min="1" value="1">
