@@ -1,11 +1,18 @@
-// import { 
+// import {
 //     SCU_RATE_CIS,
 //     SCU_RATE_CAT
 // } from "../constants.js";
 
+//@ts-check
+
+import { findRouteChain } from "./findRouteChain.js";
+
 export function buildQuoteCalculator(routes, serviceLevels) {
-    const routeSelect =
-        document.getElementById("quote-route");
+    const originSelect =
+        document.getElementById("quote-origin");
+
+    const destinationSelect =
+        document.getElementById("quote-destination");
 
     const serviceSelect =
         document.getElementById("quote-service");
@@ -22,13 +29,26 @@ export function buildQuoteCalculator(routes, serviceLevels) {
     const resultBox =
         document.getElementById("quote-result");
 
-    routeSelect.innerHTML = routes
-        .map((route, index) => {
-            return `
-                <option value="${index}">
-                    ${route.route}
-                </option>
-            `;
+    const locations = [
+        ...new Set(
+            routes.flatMap(route => [
+                route.origin_code,
+                route.destination_code
+            ])
+        )
+    ]
+        .filter(Boolean)
+        .sort();
+
+    originSelect.innerHTML = locations
+        .map(location => {
+            return `<option value="${location}">${location}</option>`;
+        })
+        .join("");
+
+    destinationSelect.innerHTML = locations
+        .map(location => {
+            return `<option value="${location}">${location}</option>`;
         })
         .join("");
 
@@ -48,67 +68,114 @@ export function buildQuoteCalculator(routes, serviceLevels) {
         })
         .join("");
 
+    // Pick a different initial destination where possible.
+    if (locations.length > 1) {
+        destinationSelect.selectedIndex = 1;
+    }
+
     function calculateQuote() {
-        const route =
-            routes[Number(routeSelect.value)];
+        const origin = originSelect.value;
+        const destination = destinationSelect.value;
+
+        if (origin === destination) {
+            resultBox.textContent =
+                "Origin and destination must be different.";
+
+            return;
+        }
+
+        const routeChain = findRouteChain(
+            routes,
+            origin,
+            destination
+        );
+
+        if (!routeChain?.length) {
+            resultBox.textContent =
+                `No established route is currently available from ${origin} to ${destination}.`;
+
+            return;
+        }
 
         const service =
             serviceLevels[Number(serviceSelect.value)];
 
-        const scus =
-            Math.max(
-                1,
-                Math.ceil(Number(scuInput.value) || 1)
-            );
+        const scus = Math.max(
+            1,
+            Math.ceil(Number(scuInput.value) || 1)
+        );
 
         const currency = currencySelect.value;
 
-        const rate =
+        const serviceRate =
             currency === "cat"
                 ? Number(service.RateCAT)
                 : Number(service.RateCIS);
 
-        const routeCharge =
-            currency === "cat"
-                ? Number(route.fuel_cat)
-                : Number(route.fuel_cis);
+        const routeCharge = routeChain.reduce(
+            (total, leg) => {
+                const legCharge =
+                    currency === "cat"
+                        ? Number(leg.fuel_cat)
+                        : Number(leg.fuel_cis);
 
-        const freightCharge = scus * rate;
+                return total + legCharge;
+            },
+            0
+        );
+
+        const freightCharge = scus * serviceRate;
         const total = freightCharge + routeCharge;
-
         const currencyLabel = currency.toUpperCase();
+
+        const routePath = [
+            routeChain[0].origin_code,
+            ...routeChain.map(
+                leg => leg.destination_code
+            )
+        ].join(" → ");
 
         serviceDescription.textContent =
             service.Description ?? "";
 
         resultBox.innerHTML = `
-           
+            
+            <span>
+                Routing:
+                ${routePath}
+            </span>
+
             <span>
                 Freight:
                 ${scus} SCU ×
-                ${rate.toLocaleString()} ${currencyLabel}
+                ${serviceRate.toLocaleString()} ${currencyLabel}
                 =
                 ${freightCharge.toLocaleString()} ${currencyLabel}
             </span>
 
             <span>
-                Route charge:
+                Route charges:
                 ${routeCharge.toLocaleString()} ${currencyLabel}
             </span>
 
             <span>
                 Delivery target:
                 within ${service.DeliveryDays} days
-            </span>
+            </span
 
-             <strong>
+            <strong>
                 ${service.ServiceName} Quote:
                 ${total.toLocaleString()} ${currencyLabel}
             </strong>
         `;
     }
 
-    routeSelect.addEventListener(
+    originSelect.addEventListener(
+        "change",
+        calculateQuote
+    );
+
+    destinationSelect.addEventListener(
         "change",
         calculateQuote
     );

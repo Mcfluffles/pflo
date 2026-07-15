@@ -1,10 +1,18 @@
 // This function builds the HMTL routing tables.
-export async function buildRouteTable(tableId, routes, serviceType) {
+export async function buildRouteTable(tableId, routes, serviceType, region = null) {
 
     try {
         
 
-        const filteredRoutes = routes.filter(r => r.service_type === serviceType);
+        const filteredRoutes = routes.filter(route => {
+            const serviceMatch =
+                route.service_type === serviceType;
+
+            const regionMatch =
+                region === null || route.region === region;
+
+            return serviceMatch && regionMatch;
+        });
 
         const table = document.getElementById(tableId);
 

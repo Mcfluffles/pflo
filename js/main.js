@@ -17,7 +17,8 @@ async function main() {
 afunc.buildQuoteCalculator(routes, serviceLevels);
 
 //Call and build the route tables
-afunc.buildRouteTable("planetary-table", routes, "Planetary");
+afunc.buildRouteTable("ben-planetary-table", routes, "Planetary", "BEN");
+afunc.buildRouteTable("arc-planetary-table", routes, "Planetary", "ARC");
 afunc.buildRouteTable("exchange-table", routes, "Exchange");
 
 }
