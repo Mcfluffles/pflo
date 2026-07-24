@@ -30,14 +30,14 @@
                 <div class="eyebrow"><span class="status-dot"></span>Freight Request Desk</div>
                 <h1>Request a shipment.</h1>
                 <p class="hero-copy">
-                    Enter the cargo, route, and contact information below. FLN will divide the shipment into contract-ready blocks of no more than 500 t and 500 m³ each.
+                    Enter the cargo, route, and contact information below. FLN will divide the shipment into Standard Cargo Units (SCUs) of no more than 500 t and 500 m³ each.
                 </p>
             </div>
-            <aside class="card rate-panel" aria-label="Contract block summary">
-                <div class="panel-label">Contract Block Limit</div>
-                <div class="big-rate">500 / 500 <span>tonnes / m³ per block</span></div>
+            <aside class="card rate-panel" aria-label="Standard Cargo Unit summary">
+                <div class="panel-label">Standard Cargo Unit</div>
+                <div class="big-rate">500 / 500 <span>tonnes / m³ per SCU</span></div>
                 <div class="metric-grid">
-                    <div class="metric"><b id="summary-block-count">0</b><span>Blocks</span></div>
+                    <div class="metric"><b id="summary-block-count">0</b><span>SCUs</span></div>
                     <div class="metric"><b id="summary-total-weight">0 t</b><span>Total weight</span></div>
                     <div class="metric"><b id="summary-total-volume">0 m³</b><span>Total volume</span></div>
                     <div class="metric"><b>Whole units</b><span>Material quantities</span></div>
@@ -100,13 +100,13 @@
             <section class="card section">
                 <div class="section-header">
                     <div>
-                        <h2>Contract Blocks</h2>
-                        <p>These are the material and quantity groups to use when issuing shipping contracts in game.</p>
+                        <h2>Standard Cargo Units</h2>
+                        <p>These are the material and quantity groups to use when issuing shipping contracts in game. Each group is one Standard Cargo Unit (SCU).</p>
                     </div>
                 </div>
 
                 <div id="block-preview" class="block-grid">
-                    <div class="empty-state">Add cargo to generate contract blocks.</div>
+                    <div class="empty-state">Add cargo to generate Standard Cargo Units.</div>
                 </div>
             </section>
 
@@ -144,7 +144,7 @@
 
         <footer>
             <div>FLN — Felidae Logistics Network</div>
-            <div>Standard contract blocks: 500 t / 500 m³</div>
+            <div>Standard Cargo Unit: 500 t / 500 m³</div>
         </footer>
     </main>
 

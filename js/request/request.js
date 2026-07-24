@@ -11,7 +11,10 @@ const requestSuccess = document.getElementById("request-success");
 const trackingCode = document.getElementById("tracking-code");
 
 let latestPlan = null;
+let latestPlanSignature = null;
 let previewTimer = null;
+let previewRequestId = 0;
+let previewController = null;
 
 function escapeHtml(value) {
     return String(value)
@@ -124,21 +127,24 @@ function formatNumber(value, maximumFractionDigits = 3) {
 }
 
 function updateSummary(plan) {
-    document.getElementById("summary-block-count").textContent = plan?.blockCount ?? 0;
+    document.getElementById("summary-block-count").textContent = plan?.scuCount ?? plan?.blockCount ?? 0;
     document.getElementById("summary-total-weight").textContent = `${formatNumber(plan?.totalWeight ?? 0)} t`;
     document.getElementById("summary-total-volume").textContent = `${formatNumber(plan?.totalVolume ?? 0)} m³`;
 }
 
-function renderPlan(plan) {
+function renderPlan(plan, signature) {
     latestPlan = plan;
+    latestPlanSignature = signature;
     updateSummary(plan);
 
-    blockPreview.innerHTML = plan.blocks.map(block => `
+    const scus = plan.scus ?? plan.blocks ?? [];
+
+    blockPreview.innerHTML = scus.map(scu => `
         <article class="mini-card contract-block">
-            <div class="kicker">Contract Block ${block.blockNumber}</div>
-            <h3>${formatNumber(block.weight)} t / ${formatNumber(block.volume)} m³</h3>
+            <div class="kicker">SCU ${scu.scuNumber ?? scu.blockNumber}</div>
+            <h3>${formatNumber(scu.weight)} t / ${formatNumber(scu.volume)} m³</h3>
             <ul class="block-items">
-                ${block.items.map(item => `
+                ${scu.items.map(item => `
                     <li>
                         <strong>${escapeHtml(item.ticker)} × ${formatNumber(item.quantity, 0)}</strong>
                         <span>${escapeHtml(item.name)}</span>
@@ -149,35 +155,60 @@ function renderPlan(plan) {
     `).join("");
 }
 
-function clearPlan(message = "Add cargo to generate contract blocks.") {
+function clearPlan(message = "Add cargo to generate Standard Cargo Units.") {
     latestPlan = null;
+    latestPlanSignature = null;
     updateSummary(null);
     blockPreview.innerHTML = `<div class="empty-state">${escapeHtml(message)}</div>`;
 }
 
 async function previewShipment() {
     const items = getItems();
+    const signature = JSON.stringify(items);
+    const requestId = ++previewRequestId;
 
     cargoError.hidden = true;
     cargoError.textContent = "";
 
+    previewController?.abort();
+    previewController = null;
+
     if (items.length === 0 || items.some(item => !item.ticker || !Number.isInteger(item.quantity) || item.quantity <= 0)) {
         clearPlan();
-        return;
+        return false;
     }
+
+    const controller = new AbortController();
+    previewController = controller;
 
     try {
         const plan = await fetchJson("/api/shipping-requests/preview", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ items })
+            body: JSON.stringify({ items }),
+            signal: controller.signal
         });
 
-        renderPlan(plan);
+        // A slower response for an earlier value must never replace the newest preview.
+        if (requestId !== previewRequestId || signature !== JSON.stringify(getItems())) {
+            return false;
+        }
+
+        renderPlan(plan, signature);
+        return true;
     } catch (error) {
-        clearPlan("Unable to generate contract blocks.");
+        if (error.name === "AbortError" || requestId !== previewRequestId) {
+            return false;
+        }
+
+        clearPlan("Unable to generate Standard Cargo Units.");
         cargoError.textContent = error.message;
         cargoError.hidden = false;
+        return false;
+    } finally {
+        if (previewController === controller) {
+            previewController = null;
+        }
     }
 }
 
@@ -208,11 +239,13 @@ form.addEventListener("submit", async event => {
         return;
     }
 
-    if (!latestPlan) {
+    const currentSignature = JSON.stringify(getItems());
+
+    if (!latestPlan || latestPlanSignature !== currentSignature) {
         await previewShipment();
     }
 
-    if (!latestPlan) {
+    if (!latestPlan || latestPlanSignature !== JSON.stringify(getItems())) {
         cargoError.textContent = "Resolve the cargo errors before submitting the request.";
         cargoError.hidden = false;
         return;
