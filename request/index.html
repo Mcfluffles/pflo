@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Request freight service from the Felidae Logistics Network." />
+    <title>Request Shipping | Felidae Logistics Network</title>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <main class="site">
+        <header class="topbar">
+            <a href="../" class="brand" aria-label="FLN home">
+                <div class="mark">FLN</div>
+                <div>
+                    <div class="brand-title">FLN</div>
+                    <div class="brand-subtitle">Felidae Logistics Network</div>
+                </div>
+            </a>
+            <nav aria-label="Primary navigation">
+                <a href="../#rates">Rates</a>
+                <a href="../#routes">Routes</a>
+                <a href="../#carriers">Network Carriers</a>
+                <a href="./" aria-current="page">Request Shipping</a>
+            </nav>
+        </header>
+
+        <section class="hero request-hero">
+            <div class="card hero-main">
+                <div class="eyebrow"><span class="status-dot"></span>Freight Request Desk</div>
+                <h1>Request a shipment.</h1>
+                <p class="hero-copy">
+                    Enter the cargo, route, and contact information below. FLN will divide the shipment into contract-ready blocks of no more than 500 t and 500 m³ each.
+                </p>
+            </div>
+            <aside class="card rate-panel" aria-label="Contract block summary">
+                <div class="panel-label">Contract Block Limit</div>
+                <div class="big-rate">500 / 500 <span>tonnes / m³ per block</span></div>
+                <div class="metric-grid">
+                    <div class="metric"><b id="summary-block-count">0</b><span>Blocks</span></div>
+                    <div class="metric"><b id="summary-total-weight">0 t</b><span>Total weight</span></div>
+                    <div class="metric"><b id="summary-total-volume">0 m³</b><span>Total volume</span></div>
+                    <div class="metric"><b>Whole units</b><span>Material quantities</span></div>
+                </div>
+            </aside>
+        </section>
+
+        <form id="shipping-request-form" novalidate>
+            <section class="card section">
+                <div class="section-header">
+                    <div>
+                        <h2>Shipment Details</h2>
+                        <p>Tell the carrier who is requesting the shipment and where the cargo needs to go.</p>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <label class="field">
+                        <span>Customer Company</span>
+                        <input id="customer-company" name="customerCompany" maxlength="200" required placeholder="Company name or code" />
+                    </label>
+                    <label class="field">
+                        <span>Contact</span>
+                        <input id="customer-contact" name="customerContact" maxlength="200" required placeholder="Discord username or other contact" />
+                    </label>
+                    <label class="field">
+                        <span>Origin</span>
+                        <select id="request-origin" name="originCode" required></select>
+                    </label>
+                    <label class="field">
+                        <span>Destination</span>
+                        <select id="request-destination" name="destinationCode" required></select>
+                    </label>
+                    <label class="field">
+                        <span>Service Level</span>
+                        <select id="request-service" name="serviceCode"></select>
+                    </label>
+                    <label class="field">
+                        <span>Preferred Carrier</span>
+                        <select id="request-operator" name="preferredOperatorCode">
+                            <option value="">No preference</option>
+                        </select>
+                    </label>
+                </div>
+            </section>
+
+            <section class="card section">
+                <div class="section-header">
+                    <div>
+                        <h2>Cargo</h2>
+                        <p>Use Prosperous Universe material tickers and whole-number quantities.</p>
+                    </div>
+                    <button class="button" type="button" id="add-material-line">Add Material</button>
+                </div>
+
+                <div id="cargo-lines" class="cargo-lines"></div>
+                <div id="cargo-error" class="form-message error-message" role="alert" hidden></div>
+            </section>
+
+            <section class="card section">
+                <div class="section-header">
+                    <div>
+                        <h2>Contract Blocks</h2>
+                        <p>These are the material and quantity groups to use when issuing shipping contracts in game.</p>
+                    </div>
+                </div>
+
+                <div id="block-preview" class="block-grid">
+                    <div class="empty-state">Add cargo to generate contract blocks.</div>
+                </div>
+            </section>
+
+            <section class="card section">
+                <div class="section-header">
+                    <div>
+                        <h2>Additional Notes</h2>
+                        <p>Include deadlines, prerequisite deliveries, access restrictions, or other instructions.</p>
+                    </div>
+                </div>
+                <label class="field">
+                    <span>Notes</span>
+                    <textarea id="request-notes" name="notes" rows="5" maxlength="4000" placeholder="Optional shipment instructions"></textarea>
+                </label>
+
+                <div class="request-actions">
+                    <button class="button primary" id="submit-request" type="submit">Submit Shipping Request</button>
+                    <span id="request-status" class="form-message" role="status"></span>
+                </div>
+            </section>
+        </form>
+
+        <section class="card section success-panel" id="request-success" hidden>
+            <div class="section-header">
+                <div>
+                    <h2>Request Submitted</h2>
+                    <p>Your shipment has been recorded and is ready for carrier review.</p>
+                </div>
+            </div>
+            <div class="formula">
+                Tracking Code: <strong id="tracking-code"></strong>
+                <span>Keep this code for future order tracking.</span>
+            </div>
+        </section>
+
+        <footer>
+            <div>FLN — Felidae Logistics Network</div>
+            <div>Standard contract blocks: 500 t / 500 m³</div>
+        </footer>
+    </main>
+
+    <script type="module" src="../js/request/request.js"></script>
+</body>
+</html>
